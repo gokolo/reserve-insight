@@ -42,10 +42,6 @@ export default {
       COUNTRY_CODE_MAPPING: COUNTRY_CODE_MAPPING
     }
   },
-  created () {
-    // console.log('countryInsight', this.countryInsight)
-    // console.log('COUNTRY_CODE_MAPPING', COUNTRY_CODE_MAPPING)
-  },
   computed: {
     countryPercentage () {
       return (this.countryInsight.value.nr_of_rooms / this.maxReservations) * 100
@@ -64,11 +60,10 @@ li {
   padding-right: 20px;
   align-items: center;
   height: 70px;
-  border-top: 1px solid #e1e5ec;
+  border-top: 2px solid #e1e5ec;
 }
 .left {
   width: 80%;
-  min-width: 500px;
   padding-right: 20px;
 }
 .right {

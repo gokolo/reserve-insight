@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <app-card>
-      <div class="header">Guest Country {{ maxReservations }}</div>
+      <div class="header">Guest Country</div>
       <div class="insights">
         <ul>
           <CountryInsightItem
@@ -41,7 +41,7 @@ export default {
 <style scoped>
 .container {
   height: 450px;
-  width: 800px;
+  width: 600px;
 }
 
 ul {

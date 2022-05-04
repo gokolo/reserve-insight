@@ -22,7 +22,6 @@ export default {
   },
   async created () {
     const result = await getCountriesInsights()
-    console.log('resp', result.data.guest_country)
     this.countriesInsights = result.data.guest_country.sort(function (a, b) {
       const aReservationChange =
         a.value.nr_of_rooms - a.reference_value.nr_of_rooms
