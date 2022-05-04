@@ -248,4 +248,4 @@ export const COUNTRY_CODE_MAPPING = {
   ZA: 'South Africa',
   ZM: 'Zambia',
   ZW: 'Zimbabwe'
-};
+}
