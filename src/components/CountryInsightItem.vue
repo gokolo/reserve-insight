@@ -2,13 +2,24 @@
   <li>
     <div class="left">
       <div class="country">
-        <div class="name">Belgium</div>
-        <div class="number">676</div>
+        <div class="name">
+          {{ COUNTRY_CODE_MAPPING[countryInsight.display_code] }}
+        </div>
+        <div class="number">{{ countryInsight.value.nr_of_rooms }}</div>
       </div>
-      <progress-bar :percent="40" />
+      <progress-bar :percent="countryPercentage" />
     </div>
     <div class="right">
-      <span class="compare-score green">+ 111</span>
+      <span
+        class="compare-score"
+        :class="{ green: reservationChange, red: reservationChange < 0 }"
+        >
+          <span v-if="reservationChange >= 0">
+            +
+          </span>
+          {{ reservationChange }}
+        </span
+      >
       <span class="compare-text">vs. Last Year</span>
     </div>
   </li>
@@ -16,14 +27,33 @@
 
 <script>
 import ProgressBar from './UI/ProgressBar.vue'
+import { COUNTRY_CODE_MAPPING } from '@/resources/country-mapping'
 export default {
   name: 'CountryInsightItem',
   components: {
     ProgressBar
+  },
+  props: {
+    countryInsight: Object,
+    maxReservations: Number
+  },
+  data () {
+    return {
+      COUNTRY_CODE_MAPPING: COUNTRY_CODE_MAPPING
+    }
+  },
+  created () {
+    // console.log('countryInsight', this.countryInsight)
+    // console.log('COUNTRY_CODE_MAPPING', COUNTRY_CODE_MAPPING)
+  },
+  computed: {
+    countryPercentage () {
+      return (this.countryInsight.value.nr_of_rooms / this.maxReservations) * 100
+    },
+    reservationChange () {
+      return this.countryInsight.value.nr_of_rooms - this.countryInsight.reference_value.nr_of_rooms
+    }
   }
-  // props: {
-  //   msg: String
-  // }
 }
 </script>
 
@@ -31,16 +61,18 @@ export default {
 li {
   display: flex;
   padding-left: 20px;
+  padding-right: 20px;
   align-items: center;
   height: 70px;
   border-top: 1px solid #e1e5ec;
 }
 .left {
   width: 80%;
+  min-width: 500px;
   padding-right: 20px;
 }
 .right {
-  width: 20%;
+  width: auto;
   display: flex;
   flex-direction: column;
 }
@@ -60,6 +92,7 @@ li {
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
+  color: #4E6477;
 }
 
 .green {

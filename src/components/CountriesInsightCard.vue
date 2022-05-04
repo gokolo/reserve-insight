@@ -1,16 +1,17 @@
 <template>
   <div class="container">
     <app-card>
-      <div class="header">Guest Country</div>
-      <ul>
-        <CountryInsightItem />
-      </ul>
-      <ul>
-        <CountryInsightItem />
-      </ul>
-      <ul>
-        <CountryInsightItem />
-      </ul>
+      <div class="header">Guest Country {{ maxReservations }}</div>
+      <div class="insights">
+        <ul>
+          <CountryInsightItem
+            v-for="countryInsight in countriesInsights"
+            :key="countryInsight.id"
+            :countryInsight="countryInsight"
+            :maxReservations="maxReservations"
+          />
+        </ul>
+      </div>
     </app-card>
   </div>
 </template>
@@ -25,15 +26,22 @@ export default {
     CountryInsightItem
   },
   props: {
-    msg: String
+    countriesInsights: Array
+  },
+  computed: {
+    maxReservations () {
+      return Math.max(
+        ...this.countriesInsights.map((el) => el.value.nr_of_rooms)
+      )
+    }
   }
 }
 </script>
 
 <style scoped>
 .container {
-  height: 500px;
-  width: 500px;
+  height: 450px;
+  width: 800px;
 }
 
 ul {
@@ -50,5 +58,10 @@ ul {
   display: flex;
   align-items: center;
   padding-left: 20px;
+}
+
+.insights {
+  overflow-y: auto;
+  height: 355px;
 }
 </style>

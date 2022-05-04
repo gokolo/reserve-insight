@@ -1,23 +1,45 @@
 <template>
   <div id="app">
-    <CountriesInsightCard msg="Welcome to Your Vue.js App"/>
+    <CountriesInsightCard
+      :countriesInsights="countriesInsights"
+      msg="Welcome to Your Vue.js App"
+    />
   </div>
 </template>
 
 <script>
 import CountriesInsightCard from './components/CountriesInsightCard.vue'
-
+import { getCountriesInsights } from './api'
 export default {
   name: 'App',
   components: {
     CountriesInsightCard
+  },
+  data () {
+    return {
+      countriesInsights: []
+    }
+  },
+  async created () {
+    const result = await getCountriesInsights()
+    console.log('resp', result.data.guest_country)
+    this.countriesInsights = result.data.guest_country.sort(function (a, b) {
+      const aReservationChange =
+        a.value.nr_of_rooms - a.reference_value.nr_of_rooms
+      const bReservationChange =
+        b.value.nr_of_rooms - b.reference_value.nr_of_rooms
+
+      return (
+        b.value.nr_of_rooms - a.value.nr_of_rooms || bReservationChange - aReservationChange
+      )
+    })
   }
 }
 </script>
 
 <style>
 body {
-  background: #E5E5E5;
+  background: #e5e5e5;
 }
 #app {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
@@ -28,6 +50,6 @@ body {
   top: 50%;
   left: 50%;
   margin-top: -250px;
-  margin-left: -250px;
+  margin-left: -400px;
 }
 </style>
