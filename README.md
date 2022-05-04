@@ -26,4 +26,5 @@ npm run lint
 ```
 
 ### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Add a .env file to the root directory.
+It should contain a variable named "VUE_APP_API_URL".
